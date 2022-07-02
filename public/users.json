@@ -1,0 +1,20 @@
+[
+  {
+    "email": "test@test.mail.com",
+    "password": "123456",
+    "token": "qwsdefyubninifvsk",
+    "id": 1
+  },
+  {
+    "email": "admin@test.mail.com",
+    "password": "qwerty",
+    "token": "qwsdefyuhfylifvsk",
+    "id": 2
+  },
+  {
+    "email": "testtest@test.com",
+    "password": "147852369",
+    "token": "qwsdefyuhvblifvsk",
+    "id": 3
+  }
+]
