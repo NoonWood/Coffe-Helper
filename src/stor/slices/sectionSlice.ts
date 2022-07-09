@@ -14,14 +14,14 @@ const initialState: Section[] = [
     id: '1',
     description: 'Рецепты чаев',
     parentKey: '1',
-    image: './img/tee.jpg',
+    image: './img/tee.webp',
   },
   {
     name: 'Кофе',
     id: '2',
     description: 'Рецепты кофе',
     parentKey: '2',
-    image: './img/coffee.jpg',
+    image: './img/coffee.webp',
   },
 ]
 

@@ -9,7 +9,7 @@ interface CardAddProps {
 }
 const CardAdd: FC<CardAddProps> = ({ to, name }) => {
   return (
-    <LinkBox as="article" p={2} borderWidth="1px" rounded="md" maxW={'330px'}>
+    <LinkBox as="article" p={4} borderWidth="1px" rounded="md" maxW={'330px'}>
       <Heading size="md" my="2">
         <AddIcon w={6} h={6} />
         <LinkOverlay as={Link} to={`${to}`}></LinkOverlay>

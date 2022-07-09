@@ -1,33 +1,50 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Heading, Box } from '@chakra-ui/react'
 import SimpleCardList from '../components/SimpleCard/SimpleCardList'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../hooks/hooksRedux'
 
 import CardAdd from '../components/CardAdd/CardAdd'
+import { useGetRecipeBySectionQuery } from '../stor/api/recipeApi'
+import useAuth from '../hooks/useAuth'
 
 const Section: FC = () => {
-  const { name } = useParams()
-  const sections = useAppSelector((state) => state.section)
+  const { name = '' } = useParams()
+  const { isAuth } = useAuth()
 
-  const thisSection = sections.find((section) => section.name === name)
-  const recipes = useAppSelector((state) => state.recipe)
+  const {
+    data: recipes,
+    error: error,
+    isLoading: isLoading,
+    isSuccess: isSuccess,
+    isFetching: isFetching,
+  } = useGetRecipeBySectionQuery(name)
 
-  if (thisSection === undefined) {
-    return null
+  if (isSuccess && recipes.length === 0) {
+    return (
+      <>
+        <Box py="2">
+          <Heading size="xl">The "{name}" section is empty</Heading>
+          <Box py=" 4">
+            {isAuth && (
+              <CardAdd to={`/recipes/new?name=${name}`} name="Recipe" />
+            )}
+          </Box>
+        </Box>
+      </>
+    )
   }
-  const recipeInSection = recipes.filter(
-    (recipe) => recipe.section === thisSection.name
-  )
 
   return (
     <>
       <Box py="2">
-        {sections && (
+        {isSuccess && (
           <>
             <Heading size="xl">{name}</Heading>
-            <SimpleCardList items={recipeInSection} />
-            <CardAdd to={'/recipes/new'} name="Recipe" />
+            <SimpleCardList items={recipes} />
+            {isAuth && (
+              <CardAdd to={`/recipes/new?name=${name}`} name="Recipe" />
+            )}
           </>
         )}
       </Box>

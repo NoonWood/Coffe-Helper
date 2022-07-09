@@ -10,7 +10,7 @@ const Sidebar: FC = () => {
     <Flex
       pos="sticky"
       left="5"
-      h="95vh"
+      h="100vh"
       marginTop="2.5vh"
       marginRight="10px"
       boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"

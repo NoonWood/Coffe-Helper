@@ -147,7 +147,7 @@ const Track: FC<TrackProps> = ({
 
   return (
     <>
-      {itemWidth && (
+      {!!itemWidth && (
         <VStack ref={node} spacing={5} alignItems="stretch">
           <MotionFlex
             dragConstraints={node}

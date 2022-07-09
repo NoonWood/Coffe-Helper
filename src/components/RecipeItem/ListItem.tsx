@@ -9,7 +9,7 @@ const ListItem: FC<RecipeStep> = ({ text, timer, id }) => {
   const handlerDone = () => {
     setDone(isDone ? false : true)
   }
-  if (timer) {
+  if (timer !== null) {
     return <TimerItem text={text} timer={timer} id={id} />
   } else {
     return (

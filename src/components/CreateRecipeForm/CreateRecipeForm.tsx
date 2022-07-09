@@ -1,7 +1,12 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { v4 as uid } from 'uuid'
-import { useNavigate } from 'react-router-dom'
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom'
 
 import {
   FormErrorMessage,
@@ -39,6 +44,9 @@ const CreateRecipeForm: FC<CreateRecipeFormProps> = ({
 }) => {
   const [steps, setSteps] = useState<RecipeStep[]>([])
   const navigate = useNavigate()
+  let [searchParams, setSearchParams] = useSearchParams()
+  let sectionName = searchParams.get('name')
+  if (!sectionName) sectionName = ''
 
   const {
     handleSubmit,
@@ -51,7 +59,7 @@ const CreateRecipeForm: FC<CreateRecipeFormProps> = ({
       name: '',
       description: '',
       grams: '15',
-      section: '',
+      section: sectionName,
     },
   })
 
@@ -163,7 +171,6 @@ const CreateRecipeForm: FC<CreateRecipeFormProps> = ({
           <FormLabel mt={4} htmlFor="section">
             Раздел
           </FormLabel>
-          {/* TODO Можно добавить автоматический выбор если переход произошел из раздела Section Coffee => select Coffee */}
           <Select mt={4} placeholder="Section" {...register('section')}>
             <option value="Чай">Чай</option>
             <option value="Кофе">Кофе</option>

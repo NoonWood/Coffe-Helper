@@ -101,13 +101,13 @@ const initialState: Recipe[] = [
   },
 ]
 
-export const getRecipes = createAsyncThunk(
-  'recipe/getRecipes',
-  async (_, { rejectWithValue, dispatch }) => {
-    const res = await axios.get('')
-    dispatch(setRecipesAction(res.data))
-  }
-)
+// export const getRecipes = createAsyncThunk(
+//   'recipe/getRecipes',
+//   async (_, { rejectWithValue, dispatch }) => {
+//     const res = await axios.get('')
+//     dispatch(setRecipesAction(res.data))
+//   }
+// )
 
 const recipeSlice = createSlice({
   name: 'recipe',
@@ -133,17 +133,19 @@ const recipeSlice = createSlice({
       return state.filter((recipe) => recipe.id !== action.payload.id)
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(getRecipes.fulfilled, (state, action) => {
-      console.log('fulfilled')
-    })
-    builder.addCase(getRecipes.pending, (state, action) => {
-      console.log('panding')
-    })
-    builder.addCase(getRecipes.rejected, (state, action) => {
-      console.log('rejected')
-    })
-  },
+
+  // extraReducers: (builder) => {
+  //   builder.addCase(getRecipes.fulfilled, (state, action) => {
+  //     console.log('fulfilled')
+  //   })
+  //   builder.addCase(getRecipes.pending, (state, action) => {
+  //     console.log('panding')
+  //   })
+  //   builder.addCase(getRecipes.rejected, (state, action) => {
+  //     console.log('rejected')
+  //   })
+  // },
+
   // extraReducers: {
   //   [getRecipes.fulfilled]: () => console.log('fulfilled'),
   //   [getRecipes.pending]: () => console.log('panding'),

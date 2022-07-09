@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { authAPI } from '../api/auth'
+import { authAPI } from '../api/authApi'
 
 interface User {
   email: string | null
