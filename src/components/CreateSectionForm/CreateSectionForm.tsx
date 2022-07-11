@@ -13,16 +13,18 @@ import {
   SimpleGrid,
 } from '@chakra-ui/react'
 import { Section } from '../../stor/slices/sectionSlice'
+import { useAddSectionMutation } from '../../stor/api/sectionApi'
 
-interface CreateSectionFormProps {
-  addSection: (nevSection: Section) => void
-}
+// interface CreateSectionFormProps {
+//   // addSection: (nevSection: Section) => void
+// }
 
-const CreateSectionForm: FC<CreateSectionFormProps> = ({ addSection }) => {
+const CreateSectionForm: FC = () => {
   const navigate = useNavigate()
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<Section>({
     defaultValues: {
@@ -31,11 +33,23 @@ const CreateSectionForm: FC<CreateSectionFormProps> = ({ addSection }) => {
     },
   })
 
+  const [addSection, { isLoading, isError }] = useAddSectionMutation()
+
+  const createError = (rejected: any) => {
+    setError('name', {
+      type: 'server',
+      message: `${rejected.data.message}`,
+    })
+  }
+
   function onSubmit(values: Section) {
     let newSection = values
     addSection(newSection)
-
-    navigate(`/sections`)
+      .unwrap()
+      .then(() => {
+        navigate(`/sections`)
+      })
+      .catch((rejected) => createError(rejected))
   }
 
   return (

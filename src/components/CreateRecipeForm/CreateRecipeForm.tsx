@@ -30,29 +30,37 @@ import CreateRecipeControls from './CreateRecipeControls'
 import ItemGroup from './CreateRecipeItem/ItemGroup'
 
 import { Recipe, RecipeStep } from '../../stor/slices/recipeSlice'
+import {
+  useAddRecipeMutation,
+  useUpdateRecipeMutation,
+} from '../../stor/api/recipeApi'
 
 interface CreateRecipeFormProps {
   recipe?: Recipe
-  editRecipe?: (newRecipe: Recipe) => void
-  addRecipe?: (newRecipe: Recipe) => void
+  // editRecipe?: (newRecipe: Recipe) => void
+  // addRecipe?: (newRecipe: Recipe) => void
+  // isLoading?: boolean
+  event?: 'Add' | 'Edit'
 }
 
-const CreateRecipeForm: FC<CreateRecipeFormProps> = ({
-  recipe,
-  editRecipe,
-  addRecipe,
-}) => {
+const CreateRecipeForm: FC<CreateRecipeFormProps> = ({ recipe, event }) => {
   const [steps, setSteps] = useState<RecipeStep[]>([])
   const navigate = useNavigate()
   let [searchParams, setSearchParams] = useSearchParams()
   let sectionName = searchParams.get('name')
   if (!sectionName) sectionName = ''
 
+  const [addRecipe, { isLoading: addLoading, isError: addError }] =
+    useAddRecipeMutation()
+  const [editRecipe, { isLoading: editLoading, isError: editError }] =
+    useUpdateRecipeMutation()
+
   const {
     handleSubmit,
     register,
     reset,
     control,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<Recipe>({
     defaultValues: {
@@ -75,21 +83,37 @@ const CreateRecipeForm: FC<CreateRecipeFormProps> = ({
     }
   }, [])
 
+  const createError = (rejected: any) => {
+    setError('name', {
+      type: 'server',
+      message: `${rejected.data.message}`,
+    })
+  }
+
   const onSubmit: SubmitHandler<Recipe> = (values) => {
     let newRecipe = values
 
     newRecipe.recipeSteps = steps
     if (recipe) {
       newRecipe.id = recipe.id
-      if (newRecipe && editRecipe !== undefined) {
+      if (newRecipe && event === 'Edit') {
         editRecipe(newRecipe)
+          .unwrap()
+          .then(() => {
+            navigate(`/recipes/${newRecipe.name}`)
+          })
+          .catch((rejected) => createError(rejected))
       }
     } else {
-      if (newRecipe && addRecipe !== undefined) {
+      if (newRecipe && event === 'Add') {
         addRecipe(newRecipe)
+          .unwrap()
+          .then(() => {
+            navigate(`/recipes/${newRecipe.name}`)
+          })
+          .catch((rejected) => createError(rejected))
       }
     }
-    navigate(`/recipes/${newRecipe.name}`)
   }
 
   const handlerAdd = (value: RecipeStep) => {
@@ -180,7 +204,7 @@ const CreateRecipeForm: FC<CreateRecipeFormProps> = ({
             <Button
               // justify="center"
               colorScheme="teal"
-              isLoading={isSubmitting}
+              isLoading={addLoading && editLoading}
               type="submit"
               mb={10}
             >

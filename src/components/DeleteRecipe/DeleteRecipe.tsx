@@ -16,21 +16,23 @@ import {
 } from '@chakra-ui/react'
 import { Recipe } from '../../stor/slices/recipeSlice'
 import { useForm } from 'react-hook-form'
+import { useDeleteRecipeMutation } from '../../stor/api/recipeApi'
 
 interface DeleteRecipeProps {
   recipe: Recipe
-  deleteRecipe: (recipe: Recipe) => void
+  // deleteRecipe: (recipe: Recipe) => void
 }
 
-const DeleteRecipe: FC<DeleteRecipeProps> = ({ recipe, deleteRecipe }) => {
+const DeleteRecipe: FC<DeleteRecipeProps> = ({ recipe }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const navigate = useNavigate()
 
   const { handleSubmit } = useForm()
 
+  const [deleteRecipe, { isLoading: isDeleting }] = useDeleteRecipeMutation()
+
   const onSubmit = () => {
-    deleteRecipe(recipe)
-    navigate(`/recipes`)
+    deleteRecipe(recipe.id).then(() => navigate(`/recipes`))
   }
 
   return (
@@ -57,7 +59,12 @@ const DeleteRecipe: FC<DeleteRecipeProps> = ({ recipe, deleteRecipe }) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button type="submit" colorScheme="blue" mr={3}>
+              <Button
+                type="submit"
+                colorScheme="blue"
+                mr={3}
+                isLoading={isDeleting}
+              >
                 Да
               </Button>
               <Button onClick={onClose}>Отмена</Button>

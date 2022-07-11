@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { Reorder } from 'framer-motion'
 
 import CreateListItem from './CreateListItem'
@@ -9,24 +9,21 @@ interface ItemGroupProps {
   onEdit: (value: RecipeStep) => void
   onRemove: (id: string) => void
 }
-const ItemGroup: FC<ItemGroupProps> = ({
-  steps,
-  setSteps,
-  onEdit,
-  onRemove,
-}) => {
-  return (
-    <Reorder.Group axis="y" as="ol" onReorder={setSteps} values={steps}>
-      {steps.map((item) => (
-        <CreateListItem
-          key={item.id}
-          item={item}
-          onEdit={onEdit}
-          onRemove={onRemove}
-        />
-      ))}
-    </Reorder.Group>
-  )
-}
+const ItemGroup: FC<ItemGroupProps> = memo(
+  ({ steps, setSteps, onEdit, onRemove }) => {
+    return (
+      <Reorder.Group axis="y" as="ol" onReorder={setSteps} values={steps}>
+        {steps.map((item) => (
+          <CreateListItem
+            key={item.id}
+            item={item}
+            onEdit={onEdit}
+            onRemove={onRemove}
+          />
+        ))}
+      </Reorder.Group>
+    )
+  }
+)
 
 export default ItemGroup

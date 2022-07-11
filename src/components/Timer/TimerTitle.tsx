@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { Heading } from '@chakra-ui/react'
 
 interface TimerTitleProps {
@@ -8,18 +8,14 @@ interface TimerTitleProps {
   paddingY: string
   color: string
 }
-const TimerTitle: FC<TimerTitleProps> = ({
-  size,
-  text,
-  paddingX,
-  paddingY,
-  color,
-}) => {
-  return (
-    <Heading size={size} px={paddingX} py={paddingY} color={color}>
-      {text}
-    </Heading>
-  )
-}
+const TimerTitle: FC<TimerTitleProps> = memo(
+  ({ size, text, paddingX, paddingY, color }) => {
+    return (
+      <Heading size={size} px={paddingX} py={paddingY} color={color}>
+        {text}
+      </Heading>
+    )
+  }
+)
 
 export default TimerTitle

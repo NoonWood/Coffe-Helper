@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import {
   Box,
   Flex,
@@ -11,7 +11,7 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher/ColorModeSwitcher'
 import Login from './Login'
 import Logo from '../../logo.svg'
 
-const Header: FC = () => {
+const Header: FC = memo(() => {
   const { colorMode } = useColorMode()
 
   return (
@@ -32,6 +32,6 @@ const Header: FC = () => {
       </Container>
     </Box>
   )
-}
+})
 
 export default Header

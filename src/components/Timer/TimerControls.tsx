@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState, memo } from 'react'
 import { Flex, IconButton } from '@chakra-ui/react'
 import { FaPlay, FaRedoAlt, FaPause } from 'react-icons/fa'
 
@@ -10,7 +10,7 @@ interface TimerControlsProps {
   iconColor: string
   time: number
 }
-const TimerControls: FC<TimerControlsProps> = ({ iconColor, time }) => {
+const TimerControls: FC<TimerControlsProps> = memo(({ iconColor, time }) => {
   const [state, dispatch] = useStateProvider()
 
   const [timer] = useState(time)
@@ -120,6 +120,6 @@ const TimerControls: FC<TimerControlsProps> = ({ iconColor, time }) => {
       <audio src={notificationUrl} ref={notificationRef} preload="auto" />
     </Flex>
   )
-}
+})
 
 export default TimerControls

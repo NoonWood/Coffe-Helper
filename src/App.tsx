@@ -1,12 +1,10 @@
 import React from 'react'
 import './App.css'
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import { Routes, Route } from 'react-router-dom'
 import RequireAuth from './hoc/RequireAuth'
 import { Provider } from 'react-redux'
 import store from './stor/configurateStore'
-
-import theme from './theme/theme'
 import Recipes from './pages/Recipes'
 import Recipe from './pages/Recipe'
 import CreateRecipe from './pages/CreateRecipe'

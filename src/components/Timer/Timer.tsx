@@ -1,5 +1,5 @@
 import { Box, Flex, useColorModeValue } from '@chakra-ui/react'
-import React, { FC, Fragment } from 'react'
+import React, { FC, Fragment, memo } from 'react'
 
 import { useStateProvider } from '../../contexts/stateProvider'
 import { useTimer } from '../../hooks/useTimer'
@@ -9,7 +9,7 @@ import TimerTitle from './TimerTitle'
 interface TimerProps {
   time: number
 }
-const Timer: FC<TimerProps> = ({ time }) => {
+const Timer: FC<TimerProps> = memo(({ time }) => {
   const [state] = useStateProvider()
   const timeredValue = useTimer()
   const boxColor = useColorModeValue('red.500', 'gray.900')
@@ -37,6 +37,6 @@ const Timer: FC<TimerProps> = ({ time }) => {
       </Box>
     </Fragment>
   )
-}
+})
 
 export default Timer

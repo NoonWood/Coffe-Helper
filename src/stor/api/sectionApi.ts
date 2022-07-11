@@ -42,7 +42,7 @@ export const sectionApi = createApi({
     }),
     addSection: builder.mutation<Section, Partial<Section>>({
       query: (body) => ({
-        url: `post`,
+        url: `/section/`,
         method: 'POST',
         body: body,
       }),
@@ -70,6 +70,7 @@ export const {
   useGetSectionByIdQuery,
   useGetSectionByNameQuery,
   useListSectionsQuery,
+  useAddSectionMutation,
   useListSectionsLimitQuery,
   useUpdateSectionMutation,
   useDeleteSectionMutation,
