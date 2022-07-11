@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { Flex, Heading, Box, Text, Spacer, Badge } from '@chakra-ui/react'
 import { useParams, Link } from 'react-router-dom'
 // import { useAppSelector } from '../hooks/hooksRedux'
@@ -8,7 +8,7 @@ import Calculator from '../components/Calculator/Calculator'
 import useAuth from '../hooks/useAuth'
 import { useGetRecipeByNameQuery } from '../stor/api/recipeApi'
 
-const Recipe: FC = () => {
+const Recipe: FC = memo(() => {
   const { name = '' } = useParams()
   const { isAuth } = useAuth()
 
@@ -60,6 +60,6 @@ const Recipe: FC = () => {
       </>
     )
   }
-}
+})
 
 export default Recipe
